@@ -52,7 +52,7 @@ echo "=== --------------------"
 echo
 echo "=== Checking status"
 echo
-sudo echo "=== $(service docker status)"
+sudo echo "$(service docker status)"
 echo
 sudo docker ps
 echo

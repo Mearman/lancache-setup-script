@@ -11,17 +11,12 @@ sudo docker stop lancache
 
 echo
 echo "=== Removing containers"
-sudo docker rm steamcache-dns
-sudo docker rm lancache
+sudo docker rm -v steamcache-dns
+sudo docker rm -v lancache
 
 echo
 echo "=== Stopping docker service"
 sudo service docker stop
-
-echo
-echo "=== Deleting container volumes"
-#sudo rm -r "/var/lib/docker/volumes/*"
-sudo find /var/lib/docker/volumes/* -delete
 
 echo
 echo "=== Starting docker"

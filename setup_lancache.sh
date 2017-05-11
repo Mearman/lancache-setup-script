@@ -63,3 +63,6 @@ echo
 sudo docker ps
 echo
 echo "=== DONE"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "You may now set your DNS to $(hostname -I | cut -d' ' -f1)"
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++"

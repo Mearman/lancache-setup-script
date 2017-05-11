@@ -1,58 +1,11 @@
 #!/bin/sh
 
-############################
-#
-# This script will show the log from the Steam Cache in colours
-# (Red: Remote, Green: Local, Orange: other).
-# Where it can, it will try and find the name of the depot being
-# downloaded and show that as part of the output.
-#
-############################
-
-STEAMCACHE_LOGS=/mnt/m03/lancache/logs
-STEAMCACHE_DEPOTINFO=/mnt/m03/lancache/info
+STEAMCACHE_LOGS=data/logs
+STEAMCACHE_DEPOTINFO=data/info
 
 echo "Watching logs..."
 
-# getGameName() {
-#
-#   if ! [ -s ${STEAMCACHE_DEPOTINFO}/${1} ]
-#     wget -O ${STEAMCACHE_DEPOTINFO}/$1 https://steamdb.info/depot/$1/ >/dev/null 2>&1
-#   fi
-#
-#   #Allows for when something goes wrong with the name.
-#   G=`cat ${STEAMCACHE_DEPOTINFO}/${1} | grep "\<h1>" | sed 's/.*header-title\">//;s/<\/h1.*//'`
-#
-#   echo $G
-# }
-
-# mkdir -p ${STEAMCACHE_DEPOTINFO}
-
 tail -F ${STEAMCACHE_LOGS}/access.log | while read LINE; do
-
-#   GAMEID=`echo ${LINE} | grep "\/depot" | sed 's/.*\/depot\/\([0-9]*\)\/.*/\1/'`
-#   if ! [ "x${GAMEID}" = "x" ]; then
-#     GAMENAME=`getGameName ${GAMEID}`
-#   else
-#     GAMENAME="none"
-#   fi
-
-#   echo "(${GAMENAME}) ${LINE}" | awk '
-#     /LOCAL/ {print "\033[32m" $0 "\033[39m"}
-#     /REMOTE/ {print "\033[31m" $0 "\033[39m"}
-#     /OTHER/ {print "\033[33m" $0 "\033[39m"}
-#   '
-# echo
-# echo "${LINE}"
-echo
-# echo "${LINE}" | grep --color 'HIT'
-echo "${LINE}" | GREP_COLOR='01;31' egrep -i --color=always '^.*MISS.*$|$'| GREP_COLOR='01;32' egrep -i --color=always '^.*HIT.*$|$'
-# tail -f myfwlog | GREP_COLOR='01;36' egrep --color=always 'ssh|$' | GREP_COLOR='01;31' egrep -i --color=always 'drop|deny|$'
-# .... GREP_COLOR='01;31' egrep -i --color=always '^.*drop.*$|^.*deny.*$|$'
-
-# echo "${LINE}" | awk '
-#   /LOCAL/ {print "\033[32m" $0 "\033[39m"}
-#   /REMOTE/ {print "\033[31m" $0 "\033[39m"}
-#   /OTHER/ {print "\033[33m" $0 "\033[39m"}
-# '
+  echo
+  echo "${LINE}" | GREP_COLOR='01;31' egrep -i --color=always '^.*MISS.*$|$'| GREP_COLOR='01;32' egrep -i --color=always '^.*HIT.*$|$'
 done

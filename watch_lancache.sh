@@ -6,6 +6,12 @@ STEAMCACHE_DEPOTINFO=data/info
 echo "Watching logs..."
 
 tail -F ${STEAMCACHE_LOGS}/access.log | while read LINE; do
+  IP="$(echo ${LINE} | grep -o '192.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')"
+  NAME="$(nslookup $IP | sed -n 's/.*arpa.*name = \(.*\)/\1/p')"
+
+  echo "hostname: ${NAME}"
+  echo "ip: ${IP}"
+
   if [[ $LINE == *"windowsupdate"* ]]; then
     echo "Windows update:"
   fi
